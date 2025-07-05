@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora de Satoshis (MXN / USD)</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #1a237e;
+      color: #fff;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .container {
+      max-width: 400px;
+      margin: auto;
+      background: #283593;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #000;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      margin-top: 5px;
+    }
+    .result {
+      margin-top: 20px;
+      background: #3949ab;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 1.5em;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+    .logo img {
+      width: 50px;
+      margin-right: 10px;
+    }
+    .logo span {
+      font-size: 1.2em;
+      color: #ffca28;
+    }
+    .precio-actual {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 0.9em;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="logo">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/4/46/Bitcoin.svg" alt="Bitcoin Logo" />
+    <span>Sats MXN</span>
+  </div>
+
+  <h1>Calculadora de Satoshis</h1>
+  <div class="container">
+    <label for="precioProducto">Precio del producto (MXN):</label>
+    <input type="number" id="precioProducto" placeholder="Ej. 100" />
+
+    <div class="precio-actual" id="precioActual">Cargando precio de BTC...</div>
+
+    <div class="result" id="resultado">Satoshis: 0</div>
+    <div class="result" id="usdEquivalente">≈ 0 USD</div>
+  </div>
+
+  <script>
+    const precioInput = document.getElementById("precioProducto");
+    const resultado = document.getElementById("resultado");
+    const usdEquivalente = document.getElementById("usdEquivalente");
+    const precioActual = document.getElementById("precioActual");
+
+    let precioBTCmxn = 1200000;
+    let precioBTCusd = 60000;
+
+    async function obtenerPrecioBTC() {
+      try {
+        const res = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=mxn,usd");
+        const data = await res.json();
+        precioBTCmxn = data.bitcoin.mxn;
+        precioBTCusd = data.bitcoin.usd;
+        precioActual.innerText = `BTC = $${precioBTCmxn.toLocaleString()} MXN / $${precioBTCusd.toLocaleString()} USD`;
+        calcularSats();
+      } catch (err) {
+        precioActual.innerText = "Error al obtener precio en tiempo real";
+      }
+    }
+
+    function calcularSats() {
+      const precio = parseFloat(precioInput.value);
+      if (!isNaN(precio) && precioBTCmxn > 0 && precioBTCusd > 0) {
+        const sats = (precio / precioBTCmxn) * 100000000;
+        const usd = precio / precioBTCmxn * precioBTCusd;
+        resultado.textContent = `Satoshis: ${Math.round(sats).toLocaleString("es-MX")}`;
+        usdEquivalente.textContent = `≈ $${usd.toFixed(2)} USD`;
+      } else {
+        resultado.textContent = "Satoshis: 0";
+        usdEquivalente.textContent = "≈ 0 USD";
+      }
+    }
+
+    precioInput.addEventListener("input", calcularSats);
+    window.addEventListener("load", obtenerPrecioBTC);
+  </script>
+</body>
+</html>
