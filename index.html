@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Satoshis</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #121212;
+      color: #fff;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .container {
+      max-width: 400px;
+      margin: auto;
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #000;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      margin-top: 5px;
+    }
+    .result {
+      margin-top: 20px;
+      background: #333;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 1.5em;
+    }
+  </style>
+</head>
+<body>
+  <h1>Calculadora de Satoshis (MXN)</h1>
+  <div class="container">
+    <label for="precioProducto">Precio del producto (MXN):</label>
+    <input type="number" id="precioProducto" placeholder="Ej. 100">
+
+    <label for="precioBTC">Precio actual de 1 BTC (MXN):</label>
+    <input type="number" id="precioBTC" value="1200000">
+
+    <div class="result" id="resultado">Satoshis: 0</div>
+  </div>
+
+  <script>
+    const precioInput = document.getElementById("precioProducto");
+    const btcInput = document.getElementById("precioBTC");
+    const resultado = document.getElementById("resultado");
+
+    function calcularSats() {
+      const precio = parseFloat(precioInput.value);
+      const precioBTC = parseFloat(btcInput.value);
+      if (!isNaN(precio) && !isNaN(precioBTC) && precioBTC > 0) {
+        const sats = (precio / precioBTC) * 100000000;
+        resultado.textContent = `Satoshis: ${Math.round(sats).toLocaleString("es-MX")}`;
+      } else {
+        resultado.textContent = "Satoshis: 0";
+      }
+    }
+
+    precioInput.addEventListener("input", calcularSats);
+    btcInput.addEventListener("input", calcularSats);
+  </script>
+</body>
+</html>
