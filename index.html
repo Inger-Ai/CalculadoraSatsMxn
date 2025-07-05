@@ -5,46 +5,65 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Calculadora de Satoshis</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      background: #121212;
-      color: #fff;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-    }
-    .container {
-      max-width: 400px;
-      margin: auto;
-      background: #1e1e1e;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px #000;
-    }
-    label {
-      display: block;
-      margin-top: 15px;
-    }
-    input {
-      width: 100%;
-      padding: 10px;
-      border: none;
-      border-radius: 8px;
-      margin-top: 5px;
-    }
-    .result {
-      margin-top: 20px;
-      background: #333;
-      padding: 15px;
-      border-radius: 8px;
-      text-align: center;
-      font-size: 1.5em;
-    }
-  </style>
+<style>
+  body {
+    font-family: sans-serif;
+    background: #1a237e; /* azul índigo oscuro */
+    color: #fff;
+    padding: 20px;
+  }
+  h1 {
+    text-align: center;
+  }
+  .container {
+    max-width: 400px;
+    margin: auto;
+    background: #283593;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px #000;
+  }
+  label {
+    display: block;
+    margin-top: 15px;
+  }
+  input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    margin-top: 5px;
+  }
+  .result {
+    margin-top: 20px;
+    background: #3949ab;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.5em;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+  .logo img {
+    width: 50px;
+    margin-right: 10px;
+  }
+  .logo span {
+    font-size: 1.2em;
+    color: #ffca28; /* dorado sutil */
+  }
+</style>
 </head>
 <body>
+  <div class="logo">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/4/46/Bitcoin.svg" alt="Bitcoin Logo">
+  <span>Sats MXN</span>
+</div>
+  
   <h1>Calculadora de Satoshis (MXN)</h1>
   <div class="container">
     <label for="precioProducto">Precio del producto (MXN):</label>
@@ -71,7 +90,7 @@
         resultado.textContent = "Satoshis: 0";
       }
     }
-
+    
     precioInput.addEventListener("input", calcularSats);
     btcInput.addEventListener("input", calcularSats);
   </script>
